@@ -12,7 +12,7 @@ testData.map(item => {
   return null;
 });
 ingredientStrings = [...new Set(ingredientStrings)];
-ingredientStrings = ingredientStrings.filter(x => x.length < 12);
+ingredientStrings = ingredientStrings.filter(x => x.length < 13);
 
 export const ingredients: Ingredient[] = ingredientStrings.map(x => ({
   name: x,

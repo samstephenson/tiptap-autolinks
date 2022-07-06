@@ -7,12 +7,12 @@ export default function App() {
 
   return (
     <PageContainer>
-      <Section title="Recipe">
-        <Card>
-          <Tiptap setActiveIngredient={setActiveIngredientId} />
-        </Card>
-      </Section>
       <Section>
+        <div className="p-8 bg-white shadow">
+          <Tiptap setActiveIngredient={setActiveIngredientId} />
+        </div>
+      </Section>
+      <div className="p-4">
         {activeIngredientId && (
           <Card hasImage>
             <h2 className="text-lg">
@@ -20,15 +20,15 @@ export default function App() {
             </h2>
           </Card>
         )}
-      </Section>
+      </div>
     </PageContainer>
   );
 }
 
 function Card({ children, hasImage = false }) {
   return (
-    <div className="w-full bg-white shadow">
-      {hasImage && <div className="w-full h-32 bg-gray-100"></div>}
+    <div className="w-full max-w-xs bg-white shadow">
+      {hasImage && <div className="w-full h-32 bg-gray-300"></div>}
       <div className="p-4">{children}</div>
     </div>
   );
@@ -36,17 +36,10 @@ function Card({ children, hasImage = false }) {
 
 function PageContainer({ children }) {
   return (
-    <div className="grid max-w-2xl grid-cols-2 gap-4 py-4 mx-auto">
-      {children}
-    </div>
+    <div className="grid h-screen grid-cols-2 gap-4 mx-auto">{children}</div>
   );
 }
 
-function Section({ children, title = null }) {
-  return (
-    <section>
-      {title && <h1 className="pb-2 text-lg font-medium">{title}</h1>}
-      {children}
-    </section>
-  );
+function Section({ children }) {
+  return <section className="overflow-y-scroll">{children}</section>;
 }
