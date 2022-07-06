@@ -10,7 +10,6 @@ export function clickHandler(onClick): Plugin {
     key: new PluginKey("handleClickLink"),
     props: {
       handleClick: (view, pos, event) => {
-        console.log("CLICKED");
         const link = (event.target as HTMLElement)?.closest("a");
 
         if (link && link.id) {
@@ -53,7 +52,6 @@ interface SearchOptions {
   caseSensitive: boolean;
   disableRegex: boolean;
   onClick?: (id: string) => void;
-  setMatchingLinks: (links: string[]) => void;
 }
 
 interface TextNodesWithPosition {
@@ -208,7 +206,7 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
     return {
       searchTerms: [{ name: "hello", id: "001" }],
       onClick: () => console.log("click"),
-      setMatchingLinks: () => console.log("setMatchingLinks"),
+
       results: [],
       searchResultClass: "search-result",
       caseSensitive: false,
@@ -243,8 +241,7 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
             return DecorationSet.empty;
           },
           apply({ doc, docChanged }) {
-            const { searchTerms, searchResultClass, setMatchingLinks } =
-              extensionThis.options;
+            const { searchTerms, searchResultClass } = extensionThis.options;
 
             // Make this async
             if (docChanged || searchTerms) {
@@ -253,9 +250,6 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
                 searchTerms,
                 searchResultClass
               );
-              setMatchingLinks(searchResults.results.map(x => x.id));
-
-              console.log("PROSEMIRROR PLUGIN > FOUND MATCHES", searchResults);
 
               return searchResults.decorationsToReturn;
             }

@@ -1,74 +1,52 @@
 import Tiptap from "./Tiptap";
 import { useState } from "react";
-import { ingredients, Ingredient } from "./data/ingredients";
+import { ingredients } from "./data/ingredients";
 
 export default function App() {
-  const [matchingIngredients, setMatchingIngredients] = useState<Ingredient[]>(
-    ingredients.slice(0, 10)
-  );
-  const [activeIngredient, setActiveIngredient] = useState<string>(null);
+  const [activeIngredientId, setActiveIngredientId] = useState<string>(null);
 
   return (
     <PageContainer>
       <Section title="Recipe">
         <Card>
-          <Tiptap
-            setActiveIngredient={setActiveIngredient}
-            setMatchingIngredients={x => {
-              console.log("Trying to set ingreds");
-              setMatchingIngredients(x);
-            }}
-          />
+          <Tiptap setActiveIngredient={setActiveIngredientId} />
         </Card>
       </Section>
-      <Section title="Matching ingredients">
-        <WrappingList>
-          {matchingIngredients.map((ingredient: Ingredient) => (
-            <Chip
-              key={ingredient.id}
-              text={ingredient.name}
-              isActive={activeIngredient === ingredient.id}
-            />
-          ))}
-        </WrappingList>
+      <Section>
+        {activeIngredientId && (
+          <Card hasImage>
+            <h2 className="text-lg">
+              {ingredients.find(x => activeIngredientId === x.id).name}
+            </h2>
+          </Card>
+        )}
       </Section>
     </PageContainer>
   );
 }
 
-function Card({ children }) {
-  return <div className="p-4 bg-white shadow">{children}</div>;
-}
-
-function WrappingList({ children }) {
-  return <div className="flex flex-wrap gap-1">{children}</div>;
+function Card({ children, hasImage = false }) {
+  return (
+    <div className="w-full bg-white shadow">
+      {hasImage && <div className="w-full h-32 bg-gray-100"></div>}
+      <div className="p-4">{children}</div>
+    </div>
+  );
 }
 
 function PageContainer({ children }) {
   return (
-    <div className="flex flex-col max-w-lg py-4 mx-auto space-y-8">
+    <div className="grid max-w-2xl grid-cols-2 gap-4 py-4 mx-auto">
       {children}
     </div>
   );
 }
 
-function Section({ children, title }) {
+function Section({ children, title = null }) {
   return (
     <section>
-      <h1 className="pb-2 text-lg font-medium">{title}</h1>
+      {title && <h1 className="pb-2 text-lg font-medium">{title}</h1>}
       {children}
     </section>
-  );
-}
-
-function Chip({ isActive, text }) {
-  return (
-    <span
-      className={`px-1.5 ${
-        isActive ? "bg-red-500 text-white" : "bg-gray-200"
-      } rounded`}
-    >
-      {text}
-    </span>
   );
 }
