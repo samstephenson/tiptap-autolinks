@@ -8,7 +8,7 @@ export default function App() {
   return (
     <PageContainer>
       <Section>
-        <div className="p-8 bg-white shadow">
+        <div className="p-8 bg-white shadow-xl">
           <Tiptap setActiveIngredient={setActiveIngredientId} />
         </div>
       </Section>
@@ -41,5 +41,9 @@ function PageContainer({ children }) {
 }
 
 function Section({ children }) {
-  return <section className="overflow-y-scroll">{children}</section>;
+  return (
+    <section className="overflow-x-visible overflow-y-scroll">
+      {children}
+    </section>
+  );
 }
