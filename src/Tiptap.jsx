@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -6,7 +7,7 @@ import { AutomaticLinks } from "./AutomaticLinks";
 import { ingredients } from "./data/ingredients";
 
 export default function Tiptap({ setActiveIngredient }) {
-  //   console.log(`Loaded ${ingredients.length} ingredients`);
+  const [isLoading, setIsLoading] = useState(true);
 
   const editor = useEditor({
     editorProps: {
@@ -24,6 +25,8 @@ export default function Tiptap({ setActiveIngredient }) {
         onClick: id => {
           setActiveIngredient(id);
         },
+        isLoading,
+        setIsLoading,
       }),
     ],
     content: `<p>To make the glaze, whisk together the barbecue sauce and vinegar in a small bowl and set aside.
@@ -38,5 +41,9 @@ export default function Tiptap({ setActiveIngredient }) {
     To serve, remove any bones from the pork and slice. Place onto a serving plate along with a mound of the pickled onions and asparagus slaw. Drizzle the dressing over the Baby Gem lettuce and serve.</p>`,
   });
 
-  return <EditorContent editor={editor} />;
+  return (
+    <div style={{ opacity: isLoading ? 0.6 : 1 }}>
+      <EditorContent editor={editor} />
+    </div>
+  );
 }

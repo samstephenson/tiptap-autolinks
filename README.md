@@ -1,6 +1,8 @@
 # Tiptap automatic links demo
 
-Example of using Tiptap decorations to highlight any text in an editor that mathes one of _n_ search terms.
+Example of using [Tiptap](https://tiptap.dev/) decorations to highlight any text in an editor that mathes one of _n_ search terms.
+
+Implementation is based heavily on [serenadeinserenade](https://github.com/sereneinserenade)'s [find & replace plugin](https://github.com/sereneinserenade/tiptap-search-n-replace-demo).
 
 The example here uses a dataset of ~5,000 food ingredients, and creates a link in the editor whenever an ingredient is mentioned.
 

@@ -52,6 +52,8 @@ interface SearchOptions {
   caseSensitive: boolean;
   disableRegex: boolean;
   onClick?: (id: string) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 interface TextNodesWithPosition {
@@ -206,7 +208,8 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
     return {
       searchTerms: [{ name: "hello", id: "001" }],
       onClick: () => console.log("click"),
-
+      isLoading: true,
+      setIsLoading: (newState: boolean) => console.log(newState),
       results: [],
       searchResultClass: "search-result",
       caseSensitive: false,
@@ -241,18 +244,27 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
             return DecorationSet.empty;
           },
           apply({ doc, docChanged }) {
-            const { searchTerms, searchResultClass } = extensionThis.options;
+            const { searchTerms, searchResultClass, setIsLoading } =
+              extensionThis.options;
 
             // Make this async
             if (docChanged || searchTerms) {
+              setIsLoading(true);
+              let t0 = performance.now();
               const searchResults = processSearches(
                 doc,
                 searchTerms,
                 searchResultClass
               );
-
+              let t1 = performance.now();
+              console.log(
+                `CHECKING ${searchTerms.length} SEARCH TERMS`,
+                Math.round(t1 - t0)
+              );
+              setIsLoading(false);
               return searchResults.decorationsToReturn;
             }
+            setIsLoading(false);
             return DecorationSet.empty;
           },
         },

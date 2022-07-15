@@ -12,7 +12,8 @@ testData.map(item => {
   return null;
 });
 ingredientStrings = [...new Set(ingredientStrings)];
-ingredientStrings = ingredientStrings.filter(x => x.length < 13);
+// Change length filter to make search function heavier
+ingredientStrings = ingredientStrings.filter(x => x.length < 15);
 
 export const ingredients: Ingredient[] = ingredientStrings.map(x => ({
   name: x,
