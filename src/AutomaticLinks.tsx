@@ -258,7 +258,7 @@ export const AutomaticLinks = Extension.create<SearchOptions>({
               );
               let t1 = performance.now();
               console.log(
-                `CHECKING ${searchTerms.length} SEARCH TERMS`,
+                `CHECKING ${searchTerms.length} SEARCH TERMS. Time Taken:`,
                 Math.round(t1 - t0)
               );
               setIsLoading(false);
