@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
@@ -8,6 +8,7 @@ import { ingredients } from "./data/ingredients";
 
 export default function Tiptap({ setActiveIngredient }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerms, setSearchTerms] = useState(ingredients);
 
   const editor = useEditor({
     editorProps: {
@@ -21,7 +22,7 @@ export default function Tiptap({ setActiveIngredient }) {
       Text,
       AutomaticLinks.configure({
         searchResultClass: " cursor-pointer text-red-500 hover:text-red-600",
-        searchTerms: ingredients,
+        searchTerms: searchTerms,
         onClick: id => {
           setActiveIngredient(id);
         },
@@ -40,6 +41,11 @@ export default function Tiptap({ setActiveIngredient }) {
     To make the blue cheese dressing, place all of the ingredients in a bowl along with the roasting garlic cloves and mix together. Transfer to a food processor and blend until it is a smooth dressing. Set aside until ready to serve.</p><p>
     To serve, remove any bones from the pork and slice. Place onto a serving plate along with a mound of the pickled onions and asparagus slaw. Drizzle the dressing over the Baby Gem lettuce and serve.</p>`,
   });
+
+  useEffect(() => {
+    console.log("updateding search terms");
+    setSearchTerms(ingredients);
+  }, []);
 
   return (
     <div style={{ opacity: isLoading ? 0.6 : 1 }}>
