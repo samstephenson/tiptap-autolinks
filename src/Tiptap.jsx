@@ -21,7 +21,7 @@ export default function Tiptap({ setActiveIngredient }) {
       Paragraph,
       Text,
       AutomaticLinks.configure({
-        searchResultClass: " cursor-pointer text-red-500 hover:text-red-600",
+        searchResultClass: " cursor-pointer text-red-400 hover:text-red-900",
         searchTerms: searchTerms,
         onClick: id => {
           setActiveIngredient(id);

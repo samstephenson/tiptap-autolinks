@@ -73,7 +73,7 @@ function processSearches(
       function loopMatches() {
         for (let j = 0; j < matches.length; j += 1) {
           const m: any = matches[j];
-          // console.log("M", m);
+
           if (m.index !== undefined) {
             results.push({
               text: m[0],
